@@ -1,0 +1,90 @@
+{% extends 'admin_navbar.html' %}
+{% load static %}
+{% block title %} Library Management System {% endblock %}
+{% block css %}
+<style>
+  body {
+    background-image: url("{% static 'background.jpg' %}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+  }
+
+  .form-container {
+    background: linear-gradient(135deg, #8B4513, #D2691E);
+    border-radius: 10px;
+    padding: 30px;
+    max-width: 500px;
+    margin: 50px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: #FFF;
+  }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container form-container">
+    <form method="POST" enctype="multipart/form-data"> {% csrf_token %}
+        <div class="row mt-4">
+            <div class="form-group col-md-12">
+                <label><i style="font-weight: bold;">Book Name</i></label>
+                <input type="text" class="form-control mt-2" name="name" placeholder="Enter name of the Book" required>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="form-group col-md-12">
+                <label><i style="font-weight: bold;">Author Name</i></label>
+                <input type="text" class="form-control mt-2" name="author" placeholder="Enter name of the Author" required>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="form-group col-md-12">
+                <label><i style="font-weight: bold;">ISBN Number</i></label>
+                <input type="number" class="form-control mt-2" name="isbn" placeholder="Enter ISBN number of the book" required>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="form-group col-md-12">
+                <label><i style="font-weight: bold;">Category</i></label>
+                <input type="text" class="form-control mt-2" name="category" placeholder="Enter Category of the book" required>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="form-group col-md-12">
+                <label><i style="font-weight: bold;">Copies</i></label>
+                <input type="text" class="form-control mt-2" name="copies" placeholder="Enter no of copies" required>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="form-group col-md-12">
+                <label><i style="font-weight: bold;">Location</i></label>
+                <input type="text" class="form-control mt-2" name="location" placeholder="Enter location of book" required>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="form-group col-md-12">
+                <label><i style="font-weight: bold;">Upload PDF</i></label>
+                <input type="file" class="form-control mt-2" name="pdf" accept="application/pdf">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-outline-primary mt-4">Add Book</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+    {% if alert %}
+    alert("Book is added successfully.")
+    document.location = "/view_books"
+    {% endif %}
+</script>
+{% endblock %}

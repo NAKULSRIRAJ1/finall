@@ -1,0 +1,160 @@
+{% extends 'admin_navbar.html' %}
+{% load static %}
+{% block title %} Library Management System {% endblock %}
+{% block css %}
+<style>
+  body {
+    background-image: url("{% static 'background.jpg' %}");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover; /* Ensures full coverage */
+    height: 100vh;
+    margin: 0;
+  }
+
+  .table-container {
+    background: linear-gradient(135deg, #8B4513, #D2691E);
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 20px auto;
+    color: #FFF;
+    max-width: 900px;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  h1 {
+    color: #FFD700;
+    animation: slideIn 0.5s ease forwards;
+    opacity: 0;
+    animation-delay: 0.3s;
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .table {
+    color: #FFF;
+    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+    animation-delay: 0.6s;
+  }
+
+  .table thead th {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #FFF;
+  }
+
+  .table-hover tbody tr {
+    transition: background-color 0.3s;
+  }
+
+  .table-hover tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .table tbody td {
+    color: #000;
+  }
+
+  .btn-danger {
+    transition: background-color 0.3s;
+  }
+
+  .btn-danger:hover {
+    background-color: #c82333;
+  }
+
+  .btn-danger {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-danger:before {
+    content: '';
+    position: absolute;
+    background: rgba(255, 255, 255, 0.2);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform: translateY(-100%);
+    transition: transform 0.3s;
+    z-index: 0;
+  }
+
+  .btn-danger:hover:before {
+    transform: translateY(0);
+  }
+
+  .btn-danger span {
+    position: relative;
+    z-index: 1;
+  }
+</style>
+{% endblock %}
+{% block body %}
+<div class="table-container">
+    <h1 class="text-center"><u>All Books List</u></h1>
+    <table class="table table-hover" id="example">
+        <thead>
+            <tr>
+                <th>Sr.No</th>
+                <th>Book Name</th>
+                <th>Author</th>
+                <th>ISBN Number</th>
+                <th>Category</th>
+                <th>Copies</th>
+                <th>Location</th>
+                <th>PDF</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <td>{{ forloop.counter }}.</td>
+                <td>{{ book.name }}</td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.isbn }}</td>
+                <td>{{ book.category }}</td>
+                <td>{{ book.copies }}</td>
+                <td>{{ book.location }}</td>
+                <td>
+                    {% if book.pdf %}
+                        <a href="{{ book.pdf.url }}" target="_blank">View PDF</a>
+                    {% else %}
+                        No PDF
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'delete_book' book.id %}" class="btn btn-danger">
+                        <span>DELETE</span>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
